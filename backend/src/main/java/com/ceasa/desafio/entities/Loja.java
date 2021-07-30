@@ -48,11 +48,6 @@ public class Loja implements Serializable {
 	public Double metragemGalpao() {
 		return galpao.getMetragem();
 	}
-
-	public Double metragemGalpaoRestante() {
-		Double metragemRestante = galpao.getMetragem() - getMetragem();
-		return metragemRestante;
-	}
 	
 	public Galpao getGalpao() {
 		return galpao;

@@ -1,5 +1,5 @@
 
-INSERT INTO tb_galpao (id, sigla, descricao, metragem , valor_metro_quadrado) VALUES (1,'MPL1', 'GALPAO DO OVO', '560.80', '50');
+INSERT INTO tb_galpao (id, sigla, descricao, metragem , valor_metro_quadrado) VALUES (1,'MPL1', 'GALPAO DO OVO', '1000.00', '50');
 INSERT INTO tb_galpao (id, sigla, descricao, metragem , valor_metro_quadrado) VALUES (2, 'MPL2', 'GALPAO DO ABACAXI', '670.80', '60');
 
 

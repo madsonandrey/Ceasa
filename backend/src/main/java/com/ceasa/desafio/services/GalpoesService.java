@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ceasa.desafio.dto.GalpaoDTO;
 import com.ceasa.desafio.entities.Galpao;
+import com.ceasa.desafio.entities.Loja;
 import com.ceasa.desafio.repositories.GalpaoRepository;
 import com.ceasa.desafio.services.exceptions.DatabaseException;
 import com.ceasa.desafio.services.exceptions.ResourceNotFoundException;
@@ -61,6 +62,19 @@ public class GalpoesService {
 
 		}
 
+	}
+	
+	@Transactional(readOnly = true)
+	public Double getMetragemRestanteGalpao(Long idGalpao) {
+		Galpao galpao = repository.findById(idGalpao).get();
+		
+		Double totalRestante = galpao.getMetragem();
+		
+		for(Loja loja : galpao.getLojas()) {
+			totalRestante = totalRestante - loja.getMetragem();
+		}
+		
+		return totalRestante;
 	}
 
 	public void delete(Long id) {

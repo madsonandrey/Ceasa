@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ceasa.desafio.dto.LojaDTO;
 import com.ceasa.desafio.entities.Loja;
-import com.ceasa.desafio.repositories.GalpaoRepository;
 import com.ceasa.desafio.repositories.LojaRepository;
 import com.ceasa.desafio.services.exceptions.DatabaseException;
 import com.ceasa.desafio.services.exceptions.ResourceNotFoundException;
@@ -26,7 +25,7 @@ public class LojaService {
 	private LojaRepository repository;
 	
 	@Autowired
-	private GalpaoRepository galpaoRepository;
+	private GalpoesService galpaoService;
 
 	@Transactional(readOnly = true)
 	public List<LojaDTO> findAll() {
@@ -49,17 +48,18 @@ public class LojaService {
 		Loja entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new LojaDTO(entity);
 	}
+	
+	private void validateInsert(Long idGalpao, Loja entity) {
+		if(entity.getMetragem() > galpaoService.getMetragemRestanteGalpao(idGalpao)) {
+			throw new ResourceNotFoundException("Não é possivel cadastrar uma loja maior que a metragem restante do galpão");
+		}
+	}
 
 	@Transactional
 	public LojaDTO insert(LojaDTO dto) {
-
 		Loja entity = new Loja();
 		copyDtoToEntity(dto, entity);
-		if (entity.metragemGalpao() < dto.getMetragem() || dto.getMetragem() > entity.metragemGalpaoRestante()) {
-			
-			throw new DatabaseException("Violation of integrity");
-
-		}
+		validateInsert(dto.getGalpao().getId(), entity);
 		entity = repository.save(entity);
 		return new LojaDTO(entity);
 	}

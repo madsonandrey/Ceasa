@@ -2,6 +2,7 @@ package com.ceasa.desafio.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Entity;
